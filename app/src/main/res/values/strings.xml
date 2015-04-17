@@ -1,0 +1,7 @@
+<resources>
+    <string name="sync_account_type">my.wenjiun.subreddit.competitivehs.ACCOUNT</string>
+    <string name="content_authority">my.wenjiun.subreddit.competitivehs</string>
+    <string name="app_name">CompetitiveHS Subreddit</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+</resources>

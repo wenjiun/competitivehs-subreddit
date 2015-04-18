@@ -71,7 +71,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider,
                               SyncResult syncResult) {
-        Log.d("CompetitiveHS", "Sync performed");
+        //Log.d("CompetitiveHS", "Sync performed");
         try {
 
             fetchItems();
@@ -100,8 +100,8 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
                 cursor.moveToFirst();
                 latestId = cursor.getString(COL_ITEM_ID);
                 latestCreated = cursor.getString(COL_ITEM_CREATED);
-                Log.d("CompetitiveHS", "Latest ID: " + latestId);
-                Log.d("CompetitiveHS", "Latest created: " + latestCreated);
+                //Log.d("CompetitiveHS", "Latest ID: " + latestId);
+                //Log.d("CompetitiveHS", "Latest created: " + latestCreated);
             }
             cursor.close();
             newItems = new ArrayList<String>();
@@ -131,7 +131,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
                                                 Log.d("CompetitiveHS", id);
                                                 if(id.equals(latestId)) {
                                                     isExist = true;
-                                                    Log.d("CompetitiveHS", id + " already exist");
+                                                    //Log.d("CompetitiveHS", id + " already exist");
                                                 }
                                                 itemValues.put(MyContract.ItemEntry.COLUMN_ID, id);
                                             } else if(name.equals("title")) {
@@ -161,7 +161,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
                                                 if(!latestCreated.equals("")) {
                                                     if(Long.parseLong(created.split("\\.")[0]) < Long.parseLong(latestCreated.split("\\.")[0])) {
                                                         isExist = true;
-                                                        Log.d("CompetitiveHS", "Time is earlier than latest");
+                                                        //Log.d("CompetitiveHS", "Time is earlier than latest");
                                                     }
                                                 }
                                                 itemValues.put(MyContract.ItemEntry.COLUMN_CREATED, created);
@@ -175,7 +175,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
                                         reader.endObject();
                                         if(!isExist) {
                                             mContext.getContentResolver().insert(MyContract.ItemEntry.CONTENT_URI, itemValues);
-                                            Log.d("CompetitiveHS", "inserted");
+                                            //Log.d("CompetitiveHS", "inserted");
                                         }
 
                                     } else {

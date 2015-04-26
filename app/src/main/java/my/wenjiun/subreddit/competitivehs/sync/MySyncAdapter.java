@@ -205,7 +205,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
         Cursor cursor = mContext.getContentResolver()
                 .query(MyContract.ItemEntry.CONTENT_URI, ITEM_COLUMNS, null, null, MyContract.ItemEntry.COLUMN_CREATED + " DESC");
         cursor.moveToFirst();
-        Log.d("CompetitiveHS", "count: " + cursor.getCount());
+        //Log.d("CompetitiveHS", "count: " + cursor.getCount());
         while(!cursor.isAfterLast()) {
             String id = cursor.getString(0);
             URL url_reddit_comment = new URL(BASE_COMMENT_URL_STRING + id + "/.json");

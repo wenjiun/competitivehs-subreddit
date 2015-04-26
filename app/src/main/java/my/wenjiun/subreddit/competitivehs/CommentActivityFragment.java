@@ -98,7 +98,7 @@ public class CommentActivityFragment extends ListFragment implements LoaderManag
         String date = sdf.format(new Date(timestamp));
         String content;
         if(html_string.equals("")) {
-            content = "<h3>" + title + "</h3><a href=\"" + url + "\"/>"  + url + "</a>";
+            content = "<h3>" + title + "</h3><p><small>Posted by <font color=\"blue\">" + author + "</font> at " + date + "</small></p><a href=\"" + url + "\"/>"  + url + "</a>";
         } else {
             content = "<h3>" + title + "</h3><p><small>Posted by <font color=\"blue\">" + author + "</font> at " + date + "</small></p>" + Html.fromHtml(html_string).toString();
         }

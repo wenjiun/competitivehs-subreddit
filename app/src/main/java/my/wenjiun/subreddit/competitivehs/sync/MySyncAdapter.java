@@ -20,7 +20,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.JsonReader;
 import android.util.JsonToken;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -128,7 +127,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
                                             name = reader.nextName();
                                             if(name.equals("id"))  {
                                                 String id = reader.nextString();
-                                                Log.d("CompetitiveHS", id);
+                                                //Log.d("CompetitiveHS", id);
                                                 if(id.equals(latestId)) {
                                                     isExist = true;
                                                     //Log.d("CompetitiveHS", id + " already exist");
@@ -200,10 +199,18 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void fetchComments() throws IOException {
-        mContext.getContentResolver().delete(MyContract.CommentEntry.CONTENT_URI, null, null);
-
         Cursor cursor = mContext.getContentResolver()
-                .query(MyContract.ItemEntry.CONTENT_URI, ITEM_COLUMNS, null, null, MyContract.ItemEntry.COLUMN_CREATED + " DESC");
+                .query(MyContract.ItemEntry.CONTENT_URI, ITEM_COLUMNS, null, null, MyContract.ItemEntry.COLUMN_CREATED + " DESC LIMIT 50");
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            String id = cursor.getString(0);
+            mContext.getContentResolver().delete(MyContract.CommentEntry.CONTENT_URI, "parent=?", new String[]{id});
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        cursor = mContext.getContentResolver()
+                .query(MyContract.ItemEntry.CONTENT_URI, ITEM_COLUMNS, null, null, MyContract.ItemEntry.COLUMN_CREATED + " DESC LIMIT 50");
         cursor.moveToFirst();
         //Log.d("CompetitiveHS", "count: " + cursor.getCount());
         while(!cursor.isAfterLast()) {
@@ -280,6 +287,7 @@ public class MySyncAdapter extends AbstractThreadedSyncAdapter {
             }
             cursor.moveToNext();
         }
+        cursor.close();
     }
 
     private void notifyForNew() {
